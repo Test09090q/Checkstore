@@ -10,10 +10,10 @@ from logging.handlers import RotatingFileHandler
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "7305555008:AAFgmI9RfgNpY8b8KdGR1NoHSdgTVTHVjjM")
 
 #Your API ID from my.telegram.org
-APP_ID = int(os.environ.get("APP_ID", "24567281"))
+APP_ID = int(os.environ.get("APP_ID", "20670408"))
 
 #Your API Hash from my.telegram.org
-API_HASH = os.environ.get("API_HASH", "17a51c14e6c25caad1a8f63a97c51f96")
+API_HASH = os.environ.get("API_HASH", "89d1c55e4d173eed8a263375201fcec5")
 
 #Your db channel Id
 CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002322660786"))
@@ -81,7 +81,7 @@ DEL_TIMER = int(os.environ.get("DEL_TIMER", "1800"))
 DEL_MSG = "<b>This File is deleting automatically in {time}. Forward in your Saved Messages..!</b>"
 
 ADMINS.append(OWNER_ID)
-ADMINS.append(7827448605)
+ADMINS.append(5691486059)
 
 LOG_FILE_NAME = "filesharingbot.txt"
 
