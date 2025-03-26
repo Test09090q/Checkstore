@@ -64,7 +64,7 @@ PROTECT_CONTENT = True if os.environ.get('PROTECT_CONTENT', "False") == "True" e
 WEBSITE_URL_MODE = os.environ.get('WEBSITE_URL_MODE', True) # Set True or False
 
 # If Website Url Mode Is True Then Fill All Required Variable, If False Then Don't Fill.
-WEBSITE_URL = os.environ.get("WEBSITE_URL", "https://rohittgcoder.blogspot.com/2024/12/rohit18.html") 
+WEBSITE_URL = os.environ.get("WEBSITE_URL", "https://hcchvhig.blogspot.com/") 
 
 #Set true if you want Disable your Channel Posts Share button
 DISABLE_CHANNEL_BUTTON = os.environ.get("DISABLE_CHANNEL_BUTTON", None) == 'True'
