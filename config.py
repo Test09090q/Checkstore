@@ -22,11 +22,11 @@ CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002322660786"))
 OWNER_ID = int(os.environ.get("OWNER_ID", "5691486059"))
 
 #Port
-PORT = os.environ.get("PORT", "8019")
+PORT = os.environ.get("PORT", "8000")
 
 #Database 
-DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://sagatobots00001:sagatobots100@cluster00001.vgdshkw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster00001")
-DB_NAME = os.environ.get("DATABASE_NAME", "Hancock_ADV_Token_Bot")
+DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://ks0360683:Ybz9rKOKYilsb38w@cluster0.x6nn0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+DB_NAME = os.environ.get("DATABASE_NAME", "Hancock")
 
 #force sub channel id, if you want enable force sub
 FORCESUB_CHANNEL = int(os.environ.get("FORCESUB_CHANNEL", "-1001511596823"))
