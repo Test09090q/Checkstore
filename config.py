@@ -7,16 +7,16 @@ from logging.handlers import RotatingFileHandler
 
 
 #Bot token @Botfather
-TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "7305555008:AAFgmI9RfgNpY8b8KdGR1NoHSdgTVTHVjjM")
+TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "8073834357:AAE9A3vb_I6wsd1gpfKri0wwsK9zQuFJH7U")
 
 #Your API ID from my.telegram.org
-APP_ID = int(os.environ.get("APP_ID", "20670408"))
+APP_ID = int(os.environ.get("APP_ID", "29534418"))
 
 #Your API Hash from my.telegram.org
-API_HASH = os.environ.get("API_HASH", "89d1c55e4d173eed8a263375201fcec5")
+API_HASH = os.environ.get("API_HASH", "5f15dd792990ade40a43ae17413b422f")
 
 #Your db channel Id
-CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002322660786"))
+CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002161128126"))
 
 #OWNER ID
 OWNER_ID = int(os.environ.get("OWNER_ID", "5691486059"))
@@ -25,12 +25,12 @@ OWNER_ID = int(os.environ.get("OWNER_ID", "5691486059"))
 PORT = os.environ.get("PORT", "8030")
 
 #Database 
-DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://ks0360683:Ybz9rKOKYilsb38w@cluster0.x6nn0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-DB_NAME = os.environ.get("DATABASE_NAME", "Hancock")
+DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://fffworld57:Or97XLuv6P6GvtFZ@cluster0.u34tcer.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+DB_NAME = os.environ.get("DATABASE_NAME", "fffworld57")
 
 #force sub channel id, if you want enable force sub
-FORCESUB_CHANNEL = int(os.environ.get("FORCESUB_CHANNEL", "-1001511596823"))
-FORCESUB_CHANNEL2 = int(os.environ.get("FORCESUB_CHANNEL2", "-1001511596823"))
+FORCESUB_CHANNEL = int(os.environ.get("FORCESUB_CHANNEL", "-1002161128126"))
+FORCESUB_CHANNEL2 = int(os.environ.get("FORCESUB_CHANNEL2", "-1002161128126"))
 
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
 
@@ -47,7 +47,7 @@ SHORT_MSG = "<b>⌯ Here is Your Download Link, Must Watch Tutorial Before Click
 START_MSG = os.environ.get("START_MESSAGE", "<b>ʜɪ ᴛʜᴇʀᴇ... {first}! 💥\n\nɪ ᴀᴍ ᴀ ꜰɪʟᴇ ꜱᴛᴏʀᴇ ʙᴏᴛ...!\nɪ ᴄᴀɴ ᴘʀᴏᴠɪᴅᴇ ᴘʀɪᴠᴀᴛᴇ ꜰɪʟᴇꜱ ᴛʜʀᴏᴜɢʜ ᴀ ꜱᴘᴇᴄɪꜰɪᴄ ʟɪɴᴋ....!\n\nᴅᴇᴠᴇʟᴏᴘᴇᴅ ғᴏʀ : [ @Javpostr ] </b>")
 try:
     ADMINS=[]
-    for x in (os.environ.get("ADMINS", " ").split()):
+    for x in (os.environ.get("ADMINS", "5691486059").split()):
         ADMINS.append(int(x))
 except ValueError:
         raise Exception("Your Admins list does not contain valid integers.")
