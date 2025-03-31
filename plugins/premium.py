@@ -1,9 +1,10 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-
+import time
 from bot import Bot
-from database.database import is_premium, remove_premium, get_premium_users, add_premium
+from database.database import *
 from config import OWNER_ID
+from datetime import datetime, timedelta
 
 @Bot.on_message(filters.command('addpaid') & filters.user(OWNER_ID))
 async def add_premium_user_command(client, msg):
