@@ -182,8 +182,3 @@ async def check_expired_users(client):
         
         # Check every hour
         await asyncio.sleep(3600)
-
-# Start the expiry checker when bot starts
-@Bot.on_startup()
-async def startup_task(client):
-    asyncio.create_task(check_expired_users(client))
