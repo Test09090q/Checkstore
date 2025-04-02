@@ -46,7 +46,7 @@ async def start_command(client: Client, message: Message):
             print(f"Error processing message: {e}")
             return
 
-        is_user_premium = await is_premium_user(user_id)
+        is_user_premium = await DatabaseManager.is_premium_user(user_id)
         if not is_user_premium and user_id != OWNER_ID and not basic.startswith("yu3elk"):
             await short_url(client, message, base64_string)
             return
@@ -214,7 +214,7 @@ async def request_command(client: Client, message: Message):
     user_id = message.from_user.id
 
     # Check if the user is a premium user
-    if not await is_premium(user_id):
+    if not await DatabaseManager.is_premium(user_id):
         await message.reply("You are not a premium user. Upgrade to premium to access this feature.")
         return
 
@@ -235,7 +235,7 @@ async def request_command(client: Client, message: Message):
 @Bot.on_message(filters.command('my_plan') & filters.private)
 async def my_plan(client: Client, message: Message):
     user_id = message.from_user.id
-    is_user_premium = await is_premium(user_id)
+    is_user_premium = await DatabaseManager.is_premium(user_id)
 
     if is_user_premium:
         await message.reply_text("Ads : Disable\nPremium : Unlocked\n\nNice Dude you're a premium user..!")
