@@ -9,8 +9,17 @@ from datetime import datetime
 import pyrogram.utils
 
 from config import API_HASH, APP_ID, LOGGER, TG_BOT_TOKEN, TG_BOT_WORKERS, FORCESUB_CHANNEL, FORCESUB_CHANNEL2, CHANNEL_ID, PORT
-
 pyrogram.utils.MIN_CHANNEL_ID = -1009147483647
+def get_indian_time():
+    """Returns the current time in IST."""
+    ist = pytz.timezone("Asia/Kolkata")
+    return datetime.now(ist)
+
+
+
+
+    
+
 class Bot(Client):
     def __init__(self):
         super().__init__(
@@ -25,10 +34,10 @@ class Bot(Client):
         )
         self.LOGGER = LOGGER
 
-    async def start(self, *args, **kwargs):
+    async def start(self):
         await super().start()
         usr_bot_me = await self.get_me()
-        self.uptime = datetime.now()
+        self.uptime = get_indian_time()  # Use IST for uptime tracking
 
         if FORCESUB_CHANNEL:
             try:
