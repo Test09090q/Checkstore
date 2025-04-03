@@ -214,7 +214,7 @@ async def request_command(client: Client, message: Message):
     user_id = message.from_user.id
 
     # Check if the user is a premium user
-    if not await DatabaseManager.is_premium(user_id):
+    if not await is_premium(user_id):
         await message.reply("You are not a premium user. Upgrade to premium to access this feature.")
         return
 
@@ -232,15 +232,7 @@ async def request_command(client: Client, message: Message):
 
     await message.reply("Thanks for your request! Your request will be reviewed soon. Please wait.")
 
-@Bot.on_message(filters.command('my_plan') & filters.private)
-async def my_plan(client: Client, message: Message):
-    user_id = message.from_user.id
-    is_user_premium = await DatabaseManager.is_premium(user_id)
 
-    if is_user_premium:
-        await message.reply_text("Ads : Disable\nPremium : Unlocked\n\nNice Dude you're a premium user..!")
-    else:
-        await message.reply_text("Ads : Enable\nPremium : Locked\nUnlock Premium to get more benefits\nContact - @Karasu_07..!")
 
 @Bot.on_message(filters.command('users') & filters.private & filters.user(OWNER_ID))
 async def get_users(client: Bot, message: Message):
@@ -293,3 +285,125 @@ Unsuccessful: <code>{unsuccessful}</code></b>"""
         msg = await message.reply(REPLY_ERROR)
         await asyncio.sleep(8)
         await msg.delete()
+
+
+# Command to add premium user
+@Bot.on_message(filters.command('addpaid') & filters.private & filters.user(OWNER_ID))
+async def add_premium_user_command(client, msg):
+    if len(msg.command) != 4:
+        await msg.reply_text("Usage: /addpaid <user_id> <time_value> <time_unit (m/d)>")
+        return
+
+    try:
+        user_id = int(msg.command[1])
+        time_value = int(msg.command[2])
+        time_unit = msg.command[3].lower()  # 'm' or 'd'
+
+        # Call add_premium function
+        expiration_time = await add_premium(user_id, time_value, time_unit)
+
+        # Notify the admin about the premium activation
+        await msg.reply_text(
+            f"User {user_id} added as a premium user for {time_value} {time_unit}.\n"
+            f"Expiration Time: {expiration_time}"
+        )
+
+        # Notify the user about their premium status
+        await client.send_message(
+            chat_id=user_id,
+            text=(
+                f"🎉 Congratulations! You have been upgraded to premium for {time_value} {time_unit}.\n\n"
+                f"Expiration Time: {expiration_time}"
+            ),
+        )
+
+    except ValueError:
+        await msg.reply_text("Invalid input. Please check the user_id, time_value, and time_unit.")
+    except Exception as e:
+        await msg.reply_text(f"An error occurred: {str(e)}")
+
+
+# Command to remove premium user
+@Bot.on_message(filters.command('removepaid') & filters.private & filters.user(OWNER_ID))
+async def pre_remove_user(client: Client, msg: Message):
+    if len(msg.command) != 2:
+        await msg.reply_text("useage: /removeuser user_id ")
+        return
+    try:
+        user_id = int(msg.command[1])
+        await remove_premium(user_id)
+        await msg.reply_text(f"User {user_id} has been removed.")
+    except ValueError:
+        await msg.reply_text("user_id must be an integer or not available in database.")
+
+
+# Command to list active premium users
+@Bot.on_message(filters.command('listpaid') & filters.private & filters.user(OWNER_ID))
+async def list_premium_users_command(client, message):
+    # Define IST timezone
+    ist = timezone("Asia/Kolkata")
+
+    # Retrieve all users from the collection
+    premium_users_cursor = collection.find({})
+    premium_user_list = ['Active Premium Users in database:']
+    current_time = datetime.now(ist)  # Get current time in IST
+
+    # Use async for to iterate over the async cursor
+    async for user in premium_users_cursor:
+        user_id = user["user_id"]
+        expiration_timestamp = user["expiration_timestamp"]
+
+        try:
+            # Convert expiration_timestamp to a timezone-aware datetime object in IST
+            expiration_time = datetime.fromisoformat(expiration_timestamp).astimezone(ist)
+
+            # Calculate remaining time
+            remaining_time = expiration_time - current_time
+
+            if remaining_time.total_seconds() <= 0:
+                # Remove expired users from the database
+                await collection.delete_one({"user_id": user_id})
+                continue  # Skip to the next user if this one is expired
+
+            # If not expired, retrieve user info
+            user_info = await client.get_users(user_id)
+            username = user_info.username if user_info.username else "No Username"
+            first_name = user_info.first_name
+
+            # Calculate days, hours, minutes, seconds left
+            days, hours, minutes, seconds = (
+                remaining_time.days,
+                remaining_time.seconds // 3600,
+                (remaining_time.seconds // 60) % 60,
+                remaining_time.seconds % 60,
+            )
+            expiry_info = f"{days}d {hours}h {minutes}m {seconds}s left"
+
+            # Add user details to the list
+            premium_user_list.append(
+                f"UserID: <code>{user_id}</code>\n"
+                f"User: @{username}\n"
+                f"Name: <code>{first_name}</code>\n"
+                f"Expiry: {expiry_info}"
+            )
+        except Exception as e:
+            premium_user_list.append(
+                f"UserID: <code>{user_id}</code>\n"
+                f"Error: Unable to fetch user details ({str(e)})"
+            )
+
+    if len(premium_user_list) == 1:  # No active users found
+        await message.reply_text("I found 0 active premium users in my DB")
+    else:
+        await message.reply_text("\n\n".join(premium_user_list), parse_mode=None)
+
+@Bot.on_message(filters.command('myplan') & filters.private)
+async def check_plan(client, message):
+    user_id = message.from_user.id  # Get user ID from the message
+
+    # Get the premium status of the user
+    status_message = await check_user_plan(user_id)
+
+    # Send the response message to the user
+    await message.reply(status_message)
+
