@@ -10,7 +10,7 @@ import pytz
 from datetime import datetime, timedelta
 import pyrogram.utils
 
-from config import API_HASH, APP_ID, LOGGER, TG_BOT_TOKEN, TG_BOT_WORKERS, FORCESUB_CHANNEL, FORCESUB_CHANNEL2, CHANNEL_ID, PORT
+from config import *
 pyrogram.utils.MIN_CHANNEL_ID = -1009147483647
 
 
