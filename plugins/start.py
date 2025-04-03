@@ -9,6 +9,7 @@ from bot import Bot
 from config import *
 from helper_func import *
 from database.database import *
+from database.db_premium import *
 from plugins.shorturl import get_short
 from plugins.autodel import convert_time
 
