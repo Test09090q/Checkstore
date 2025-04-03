@@ -47,7 +47,7 @@ async def start_command(client: Client, message: Message):
             print(f"Error processing message: {e}")
             return
 
-        is_user_premium = await DatabaseManager.is_premium_user(user_id)
+        is_user_premium = await is_premium_user(user_id)
         if not is_user_premium and user_id != OWNER_ID and not basic.startswith("yu3elk"):
             await short_url(client, message, base64_string)
             return
