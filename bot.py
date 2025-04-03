@@ -6,6 +6,7 @@ from pyrogram import Client
 from pyrogram.enums import ParseMode
 import sys
 import time
+import pytz
 from datetime import datetime, timedelta
 import pyrogram.utils
 
